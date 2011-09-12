@@ -118,7 +118,7 @@ class Test(_Task):
     def execute(self):
         self.add_dependencies_to_classpath()
         args = sys.argv[2:] if len(sys.argv) > 2 else self._default_args
-        self.run_robot_tests(args)
+        return self.run_robot_tests(args)
 
     def add_dependencies_to_classpath(self):
         if not _exists(self._deps_file):
@@ -237,7 +237,7 @@ class Tasks(object):
 if __name__ == '__main__':
     tasks = Tasks()
     try:
-        tasks.get(sys.argv[1]).execute()
+        sys.exit(tasks.get(sys.argv[1]).execute())
     except (KeyError, IndexError):
         print "Usage:  build.py task\n\nAvailable tasks:\n%s" % tasks
 
